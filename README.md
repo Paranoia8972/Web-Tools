@@ -1,1 +1,0 @@
-# encryptopia.paranoia8972.github.io
