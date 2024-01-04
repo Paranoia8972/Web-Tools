@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown2HTML</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        textarea, button, #htmlOutput, #liveHtmlOutput, #rawHtmlOutput {
+            background-color: #161b22;
+            color: #c9d1d9;
+            border: none;
+            margin: 10px 0;
+            padding: 10px;
+            width: 80%;
+        }
+
+        button {
+            background-color: #28a745;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        h3 {
+            color: #58a6ff;
+        }
+
+        #htmlOutput, #liveHtmlOutput, #rawHtmlOutput {
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            overflow: auto;
+        }
+
+        #copyButton {
+            background-color: #008CBA;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #copyButton:hover {
+            background-color: #007799;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="markdownInput" rows="10" placeholder="Enter Markdown here..." oninput="convertMarkdown()"></textarea>
+    <button onclick="convertMarkdown()">Convert</button>
+
+    <div>
+        <h3>Live HTML Preview:</h3>
+        <div id="liveHtmlOutput"></div>
+    </div>
+
+    <textarea id="rawHtmlOutput" rows="10" readonly placeholder="Raw HTML Output"></textarea>
+
+    <button id="copyButton" onclick="copyToClipboard()">Copy to Clipboard</button>
+
+    <script>
+        function convertMarkdown() {
+            const markdownInput = document.getElementById('markdownInput').value;
+            const converter = new showdown.Converter();
+
+            // Convert to HTML
+            const htmlOutput = converter.makeHtml(markdownInput);
+
+            // Update live HTML preview
+            document.getElementById('liveHtmlOutput').innerHTML = htmlOutput;
+
+            // Display raw HTML
+            document.getElementById('rawHtmlOutput').value = htmlOutput;
+        }
+
+        function copyToClipboard() {
+            const rawHtmlOutput = document.getElementById('rawHtmlOutput');
+            rawHtmlOutput.select();
+            document.execCommand('copy');
+            alert('Copied to clipboard!');
+        }
+    </script>
+</body>
+</html>
